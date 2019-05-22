@@ -1,7 +1,5 @@
-// use rand::random;
-
-///
-///
+/// A function to estimate if a big integar is prime. Notice that the input
+/// n should larger than 37.
 ///
 pub fn rabin_miller(n: u64) -> bool {
     let mut k = 0;
@@ -35,8 +33,10 @@ pub fn rabin_miller(n: u64) -> bool {
     }
     true
 }
-
-fn power_mod(mut a: u64, mut b: u64, m: u64) -> u64 {
+/// a ^ b mod m
+/// 
+/// 
+pub fn power_mod(mut a: u64, mut b: u64, m: u64) -> u64 {
     let mut res: u64 = 1;
     a %= m;
     while b != 0 {
@@ -94,7 +94,7 @@ pub fn euler_sieve(size: usize) -> Vec<usize> {
 ///
 ///
 ///
-pub fn gcd(a: u64, b: u64) -> u64 {
+pub fn gcd(a: usize, b: usize) -> usize {
     if (a % b) == 0 {
         return b;
     }
@@ -102,16 +102,30 @@ pub fn gcd(a: u64, b: u64) -> u64 {
 }
 
 ///
+/// 
+/// 
+pub fn ex_gcd(a: usize, b: usize, x: &mut usize, y: &mut usize) -> usize {
+    if b == 0 {
+        *x = 1;
+        *y = 0;
+        return a;
+    }
+    let res = ex_gcd(b, a % b, y, x);
+    *y -= a / b * (*x);
+    res
+}
+
 ///
 ///
-pub fn lcm(a: u64, b: u64) -> u64 {
+///
+pub fn lcm(a: usize, b: usize) -> usize {
     (a * b) / gcd(a, b)
 }
 
 ///
-pub fn euler_func(mut n: u64) -> u64 {
-    let mut res: u64 = n;
-    let mut i: u64 = 2;
+pub fn euler_func(mut n: usize) -> usize {
+    let mut res: usize = n;
+    let mut i: usize = 2;
     while i * i <= n {
         if n % i == 0 {
             res -= res / i;
@@ -125,6 +139,22 @@ pub fn euler_func(mut n: u64) -> u64 {
         res -= res / n;
     }
     res
+}
+
+///
+/// 
+/// 
+pub fn is_coprime(x: usize, y: usize) -> bool {
+    if x == 0 || y == 0 {
+        return false;
+    }
+    if x == 1 || y == 1 {
+        return true;
+    }
+    if gcd(x, y) == 1 {
+        return true;
+    }
+    false
 }
 
 #[cfg(test)]
